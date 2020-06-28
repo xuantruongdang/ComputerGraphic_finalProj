@@ -1,0 +1,22 @@
+* {
+    font-family: 'Krona One', sans-serif;
+    font-size: 1.15rem;
+}
+
+.nav-link {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+}
+
+.transform {
+    position: relative;
+    top: 100px;
+    z-index: 1;
+    padding: 0.125em;
+    margin-left: 1em;
+}
+
+#rendering {
+    position: absolute;
+    z-index: 1;
+}
