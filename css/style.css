@@ -13,6 +13,19 @@
   z-index: 1;
 }
 
+.movebutton {
+  margin-top: 50px;
+  margin-left: 95%;
+}
+
+.repeatbutton {
+  margin-left: 95%;
+}
+
+.fullscreenbutton {
+  margin-left: 95%;
+}
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;

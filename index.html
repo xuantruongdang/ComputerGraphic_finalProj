@@ -23,7 +23,7 @@
 				<div class="p-4 pt-5">
 		  		<h1><a href="index.html" class="logo">TEAM A</a></h1>
 	        <ul class="list-unstyled components mb-5">
-	          <li class="active">
+	          <li>
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Geometry</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
@@ -62,8 +62,8 @@
 		<div id="rendering" class="w-100 h-100 position-fixed">
 		</div>
 		<div>
-			<div class="transform col-1">
-				<button type="button" class="btn btn-light shadow mt-5">
+			<div class="transform col-12">
+				<button type="button" class="btn btn-light shadow movebutton">
 					<svg class="bi bi-arrows-move" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd" d="M6.5 8a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1H6a.5.5 0 0 0 .5-.5z" />
@@ -78,8 +78,8 @@
 					</svg>
 				</button>
 			</div>
-			<div class="transform col-1">
-				<button type="button" class="btn btn-light shadow">
+			<div class="transform col-12">
+				<button type="button" class="btn btn-light shadow repeatbutton">
 					<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd"
@@ -89,8 +89,8 @@
 					</svg>
 				</button>
 			</div>
-			<div class="transform col-1">
-				<button type="button" class="btn btn-light shadow">
+			<div class="transform col-12">
+				<button type="button" class="btn btn-light shadow fullscreenbutton">
 					<svg class="bi bi-arrows-fullscreen" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd"
@@ -123,7 +123,11 @@
 	<script>
 		var scene = new THREE.Scene();
 		scene.background = new THREE.Color(0x000000);
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+		// (field of view - vetical, scale, near, far)
+		var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+		camera.position.set(0,5,2.5);
+		// camera.lookAt(new THREE.Vector3(0.9,0,0));
 
 		var renderer = new THREE.WebGLRenderer();
 		renderer.setSize(window.innerWidth, window.innerHeight);
@@ -183,7 +187,9 @@
 		// add grid
 		var sizegrid = 10;
 		var divisions = 25;
-		var gridHelper = new THREE.GridHelper( sizegrid, divisions );
+		var colorCenterLine = 0x000000
+		var gridHelper = new THREE.GridHelper( sizegrid, divisions);
+		scene.add( gridHelper );
 
 		var AddGeo = function (id) {
 			// controls.update();
