@@ -27,13 +27,22 @@
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Geometry</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-                    <a href="#" onclick="return AddGeo(1);">Cube</a>
-                </li>
+                    <a href="#" onclick="RenderGeo(1);">Cube</a>
+				</li>
+				<li>
+                    <a href="#" onclick="RenderGeo(2);">Sphere</a>
+				</li>
                 <li>
-                    <a href="#">Cone</a>
+                    <a href="#" onclick="RenderGeo(3);">Cone</a>
+				</li>
+				<li>
+                    <a href="#" onclick="RenderGeo(4);">Cylinder</a>
                 </li>
-                <li>
-                    <a href="#">Torus</a>
+				<li>
+                    <a href="#" onclick="RenderGeo(5);">Torus</a>
+                </li>
+				<li>
+                    <a href="#" onclick="RenderGeo(6);">Teapot</a>
                 </li>
 	            </ul>
 	          </li>
@@ -41,13 +50,13 @@
               <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Surface</a>
               <ul class="collapse list-unstyled" id="pageSubmenu">
                 <li>
-                    <a href="#">Solid</a>
+                    <a href="#" onclick="SetMaterial(1);">Point</a>
                 </li>
                 <li>
-                    <a href="#">Point</a>
+                    <a href="#" onclick="SetMaterial(2);">Line</a>
                 </li>
                 <li>
-                    <a href="#">Line</a>
+                    <a href="#" onclick="SetMaterial(3);">Solid</a>
                 </li>
               </ul>
 	          </li>
@@ -119,104 +128,6 @@
 	<script src="js/OrbitControls.js"></script>
 	<script src="js/TeapotBufferGeometry.js"></script>
 	<script src="js/geometry.js"></script>
-
-	<script>
-		var scene = new THREE.Scene();
-		scene.background = new THREE.Color(0x000000);
-		var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-		var renderer = new THREE.WebGLRenderer();
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		console.log(window.innerWidth, window.innerHeight);
-		document.getElementById("rendering").appendChild(renderer.domElement);
-
-		// check when the browser size has changed and adjust the camera accordingly
-		window.addEventListener('resize', function () {
-			var WIDTH = window.innerWidth;
-			var HEIGHT = window.innerHeight;
-
-			camera.aspect = WIDTH / HEIGHT;
-			camera.updateProjectionMatrix();
-
-			renderer.setSize(WIDTH, HEIGHT);
-		});
-
-		controls = new THREE.OrbitControls(camera, renderer.domElement);
-		// CUBE
-		var BoxGeometry = new THREE.BoxGeometry(2, 2, 5);
-		var SphereGeometry = new THREE.SphereGeometry( 3, 50, 50 );
-		var ConeGeometry = new THREE.CylinderGeometry(0, 2, 6, 50, 1);
-		var CylinderGeometry = new THREE.CylinderGeometry( 2, 2, 4, 30 );
-		var TorusGeometry = new THREE.TorusGeometry( 2, 0.5, 20, 100 );
-		var TeapotGeometry = new THREE.TeapotBufferGeometry( 2, 2, 4);
-		/*
-		- Hình hộp: BoxGeometry(a, b, c)
-		- Hình Cầu: SphereGeometry( 3, 50, 50 )
-		- Hình nón: CylinderGeometry(0, 2, 6, 50, 1)
-		- Hình Trụ: CylinderGeometry( 2, 2, 4, 30 );
-		- Bánh xe: TorusGeometry( 2, 0.5, 20, 100 )
-		- Ấm trà: TeapotBufferGeometry( 2, 2, 4);
-
-		*/
-		// Create a MeshFaceMaterial, which allows the cube to have different materials on each face
-		// var cubeMaterial = new THREE.MeshFaceMaterial( cubeMaterials );
-		// var cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: true } );
-		var BoxMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
-		var SphereMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
-		var ConeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
-		var CylinderMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
-		var TorusMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
-		var TeapotMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
-		
-		// scene.add(box);
-
-		var directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-		directionalLight.position.x = 0;
-		directionalLight.position.y = 5;
-		directionalLight.position.z = 0;
-		scene.add(directionalLight)
-
-		scene.fog = new THREE.Fog(0xffffff, 0, 20000);
-		renderer.setClearColor(scene.fog.color, 1);
-		camera.position.z = 10;
-		
-		// add grid
-		var sizegrid = 10;
-		var divisions = 25;
-		var gridHelper = new THREE.GridHelper( sizegrid, divisions );
-
-		var AddGeo = function (id) {
-			// controls.update();
-
-			while(scene.children.length > 0){ 
-    			scene.remove(scene.children[0]); 
-			}
-			switch(id)
-			{
-				case 1: geo = new THREE.Mesh(BoxGeometry, BoxMaterial);break;
-				case 2: geo = new THREE.Mesh(SphereGeometry, SphereMaterial);break;
-				case 3: geo = new THREE.Mesh(ConeGeometry, ConeMaterial);break;
-				case 4: geo = new THREE.Mesh(CylinderGeometry, CylinderMaterial);break;
-				case 5: geo = new THREE.Mesh(TorusGeometry, TorusMaterial);break;
-				case 6: geo = new THREE.Mesh(TeapotGeometry, TeapotMaterial);break;
-			}
-			
-			geo.rotation.x += 0.01; // animation
-			scene.add(geo);
-			scene.add( gridHelper );
-			renderer.render(scene, camera);
-			console.log(id)
-			requestAnimationFrame(AddGeo);
-		}
-		// run game loop (update, render, repeat)
-		var GameLoop = function () {
-			// cube.rotation.x += 0.01; //update
-			controls.update();
-			renderer.render(scene, camera);
-			requestAnimationFrame(GameLoop);
-		};
-
-		GameLoop();
-	</script>
+	<script src="./index.js"></script>
   </body>
 </html>
