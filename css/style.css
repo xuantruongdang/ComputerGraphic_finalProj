@@ -12,8 +12,24 @@
   position: relative;
   z-index: 1;
 }
+/* 
+#cardmodified {
+  position: relative;
+  z-index: 2;
+  margin-left: 80%;
+  margin-right: 3em;
+} */
 
-.movebutton {
+.transform {
+  position: relative;
+  top: 100px;
+  z-index: 1;
+  /* padding: 0.125em; */
+  margin-left: 50%;
+  padding-right: 0px !important;
+}
+
+/* .movebutton {
   margin-top: 50px;
   margin-left: 95%;
 }
@@ -24,7 +40,7 @@
 
 .fullscreenbutton {
   margin-left: 95%;
-}
+} */
 
 :root {
   --blue: #007bff;

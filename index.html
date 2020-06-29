@@ -62,7 +62,7 @@
 		<div id="rendering" class="w-100 h-100 position-fixed">
 		</div>
 		<div>
-			<div class="transform col-12">
+			<div class="transform col-1">
 				<button type="button" class="btn btn-light shadow movebutton">
 					<svg class="bi bi-arrows-move" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +78,7 @@
 					</svg>
 				</button>
 			</div>
-			<div class="transform col-12">
+			<div class="transform col-1">
 				<button type="button" class="btn btn-light shadow repeatbutton">
 					<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg">
@@ -89,7 +89,7 @@
 					</svg>
 				</button>
 			</div>
-			<div class="transform col-12">
+			<div class="transform col-1">
 				<button type="button" class="btn btn-light shadow fullscreenbutton">
 					<svg class="bi bi-arrows-fullscreen" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg">
@@ -106,9 +106,29 @@
 					</svg>
 				</button>
 			</div>
+			<div id = "cardmodified" class="card bg-light mb-3" style="max-width: 18rem;">
+				<div class="card-header">Control</div>
+				<div class="card-body">
+				  	<label for="customRange1">Example range</label>
+					<input type="range" class="custom-range" id="customRange1">
+					<label for="customRange1">Example range</label>
+					<input type="range" class="custom-range" id="customRange1">
+					<label for="customRange1">Example range</label>
+					<input type="range" class="custom-range" id="customRange1">
+				</div>
+				
+			</div>
+
+			<div class="d-flex flex-row-reverse">
+				<div class="p-2">Flex item 1</div>
+				<div class="p-2">Flex item 2</div>
+				<div class="p-2">Flex item 3</div>
+			</div>
+			
 		</div>
       </div>
 		</div>
+
 	
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
