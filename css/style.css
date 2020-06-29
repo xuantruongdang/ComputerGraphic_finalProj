@@ -24,9 +24,9 @@
   position: relative;
   top: 100px;
   z-index: 1;
-  /* padding: 0.125em; */
-  margin-left: 50%;
-  padding-right: 0px !important;
+  padding: 0.125em;
+  /* margin-left: 90%;
+  padding-right: 0px !important; */
 }
 
 /* .movebutton {
@@ -36,11 +36,17 @@
 
 .repeatbutton {
   margin-left: 95%;
-}
-
-.fullscreenbutton {
-  margin-left: 95%;
 } */
+/* 
+.ctrlbutton {
+  margin-left: -20 !important; 
+  position: relative;
+} */
+
+.ctrlpannel {
+  margin-left: 60px;
+  margin-top: -114px;
+}
 
 :root {
   --blue: #007bff;
