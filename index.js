@@ -2,7 +2,9 @@ import * as THREE from './js/three.module.js';
 import { OrbitControls } from './js/OrbitControls.js';
 import {TransformControls} from './js/TransformControls.js';
 import {TeapotBufferGeometry} from './js/TeapotBufferGeometry.js';
-var camera, scene, renderer, material, d_id, control, orbit, geo;
+
+var camera, scene, renderer, control, orbit;
+var material, d_id, geo, texture;
 var type_material = 3;
 var geometry = new THREE.Mesh();
 
@@ -78,6 +80,7 @@ function SetMaterial(mat)
         case 1: material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.25 }); break; //points
         case 2: material = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2 } );  break; //line
         case 3: material = new THREE.MeshBasicMaterial({ color: 0xffffff });  break; //solid
+        case 4: material = new THREE.MeshBasicMaterial({map: texture,transparent: true}); break; //texture
     }
     RenderGeo(d_id);
 }
@@ -97,7 +100,7 @@ function RenderGeo(id){
                 geo = new THREE.EdgesGeometry(BoxGeometry)
                 geometry = new THREE.LineSegments( geo, material );
             }
-            if (type_material == 3)
+            if (type_material == 3 || type_material == 4)
                 geometry = new THREE.Mesh(BoxGeometry, material);
             break;
         case 2:
@@ -108,7 +111,7 @@ function RenderGeo(id){
                 geo = new THREE.EdgesGeometry(SphereGeometry)
                 geometry = new THREE.LineSegments( geo, material );
             }
-            if (type_material == 3)
+            if (type_material == 3 || type_material == 4)
                 geometry = new THREE.Mesh(SphereGeometry, material);
             break;
         case 3:
@@ -119,7 +122,7 @@ function RenderGeo(id){
                 geo = new THREE.EdgesGeometry(ConeGeometry)
                 geometry = new THREE.LineSegments( geo, material );
             }
-            if (type_material == 3)
+            if (type_material == 3 || type_material == 4)
                 geometry = new THREE.Mesh(ConeGeometry, material);
             break;
         case 4:
@@ -130,7 +133,7 @@ function RenderGeo(id){
                 geo = new THREE.EdgesGeometry(CylinderGeometry)
                 geometry = new THREE.LineSegments( geo, material );
             }
-            if (type_material == 3)
+            if (type_material == 3 || type_material == 4)
                 geometry = new THREE.Mesh(CylinderGeometry, material);
             break;
         case 5:
@@ -141,7 +144,7 @@ function RenderGeo(id){
                 geo = new THREE.EdgesGeometry(TorusGeometry)
                 geometry = new THREE.LineSegments( geo, material );
             }
-            if (type_material == 3)
+            if (type_material == 3 || type_material == 4)
                 geometry = new THREE.Mesh(TorusGeometry, material);
             break;
         case 6:
@@ -152,7 +155,7 @@ function RenderGeo(id){
                 geo = new THREE.EdgesGeometry(TeapotGeometry)
                 geometry = new THREE.LineSegments( geo, material );
             }
-            if (type_material == 3)
+            if (type_material == 3 || type_material == 4)
                 geometry = new THREE.Mesh(TeapotGeometry, material);
             break;
     }
@@ -211,17 +214,31 @@ function control_transform(geometry) {
 	control.attach(geometry);
 	scene.add(control);
 	console.log(control);
-	// window.addEventListener('keydown', function (event) {
-	// 	switch (event.keyCode) {
-	// 		case 87: // W
-	// 			EventTranslate();
-	// 			break;
-	// 		case 69: // E
-	// 			EventRotate();
-	// 			break;
-	// 		case 82: // R
-	// 			EventScale();
-	// 			break;
-	// 	}
-	// });
+	window.addEventListener('keydown', function (event) {
+		switch (event.keyCode) {
+            case 87: // W
+				Translate();break;
+			case 69: // E
+				Rotate();break;
+			case 82: // R
+				Scale();break;
+			case 88: // X
+				control.showX = ! control.showX;break;
+			case 89: // Y
+				control.showY = ! control.showY;break;
+			case 90: // Z
+				control.showZ = ! control.showZ;break;
+		}
+	});
 }
+
+// 4.Light
+// 5.Texture 
+function SetTexture(url) {
+	if (d_id == null) return;
+    texture = new THREE.TextureLoader().load(url, render);
+    console.log(texture);
+	texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+	SetMaterial(4);
+}
+window.SetTexture = SetTexture;

@@ -62,6 +62,11 @@
 							<li>
 								<a href="#" onclick="SetMaterial(3);">Solid</a>
 							</li>
+							<li>
+								<input type="file" accept="image/*" id="texture" style="display: none;"
+								onchange="SetTexture(window.URL.createObjectURL(this.files[0]))" />
+								<a href="#" name="button" onclick="Uploadimage();">Texture</a>
+							</li>
 						</ul>
 					</li>
 
@@ -183,6 +188,10 @@
 				setFar($valueFar.val());
 			});
 		});
+
+		function Uploadimage() {
+			document.getElementById("texture").click();
+		};
 	</script>
 </body>
 
