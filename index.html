@@ -78,8 +78,8 @@
 				<div class="ml-auto w-25">
 					<div class="col-1 ">
 						<button type="button" class="btn btn-light shadow movebutton">
-							<svg class="bi bi-arrows-move" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-								xmlns="http://www.w3.org/2000/svg">
+							<svg class="bi bi-arrows-move" width="1em" height="1em" viewBox="0 0 16 16"
+								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
 									d="M6.5 8a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1H6a.5.5 0 0 0 .5-.5z" />
 								<path fill-rule="evenodd"
@@ -93,8 +93,8 @@
 							</svg>
 						</button>
 						<button type="button" class="btn btn-light shadow repeatbutton">
-							<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"
-								xmlns="http://www.w3.org/2000/svg">
+							<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
 									d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z" />
 								<path fill-rule="evenodd"
@@ -121,13 +121,23 @@
 						<div class="mr-auto card bg-light" style="max-width: 15rem;">
 							<div class="card-header">Control pannel</div>
 							<div class="card-body">
-								<label for="customRange1">Field of View</label>
-								<input type="range" class="custom-range" id="customFoV" min="0" max="180" value="75">
-								<label for="customRange1">Near</label>
-								<input type="range" class="custom-range" id="customNear" min="0.1" max="10" value="0.1">
-								<label for="customRange1">Far</label>
-								<input type="range" class="custom-range" id="customFar" min="500" max="5000"
-									value="2000">
+								<!-- <label for="customFOV">Field of View</label> -->
+								<div>
+									<span class="mr-auto valueSpanFOV"></span>
+									<input type="range" class="custom-range" id="customFOV" min="0" max="180"
+										value="75">
+								</div>
+								<!-- <label for="customRange1">Near</label> -->
+								<div>
+									<span class="mr-auto valueSpanNear"></span>
+								<input type="range" class="custom-range" id="customNear" min="0.1" max="100" value="0.1">
+								</div>
+								<!-- <label for="customRange1">Far</label> -->
+								<div>
+									<span class="mr-auto valueSpanFar"></span>
+								<input type="range" class="custom-range" id="customFar" min="200" max="2000"
+									value="1000">
+									</div>
 							</div>
 
 						</div>
@@ -139,7 +149,6 @@
 		</div>
 	</div>
 
-
 	<script src="js/jquery.min.js"></script>
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -150,6 +159,36 @@
 	<script src="js/TeapotBufferGeometry.js"></script>
 	<script src="js/geometry.js"></script>
 	<script src="./index.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			const $valueSpanFOV = $('.valueSpanFOV');
+			const $valueSpanNear = $('.valueSpanNear');
+			const $valueSpanFar = $('.valueSpanFar');
+
+			const $valueFOV = $('#customFOV');
+			const $valueNear = $('#customNear');
+			const $valueFar = $('#customFar');
+
+			$valueSpanFOV.html("Field of view: " + $valueFOV.val());
+			$valueFOV.on('input change', () => {
+				$valueSpanFOV.html("Field of view: " + $valueFOV.val());
+				setFOV($valueFOV.val());
+			});
+
+			$valueSpanNear.html("Near: " + $valueNear.val());
+			$valueNear.on('input change', () => {
+				$valueSpanNear.html("Near: " + $valueNear.val());
+				setNear($valueNear.val());
+			});
+
+			$valueSpanFar.html("Far: " + $valueFar.val());
+			$valueFar.on('input change', () => {
+				$valueSpanFar.html("Far: " + $valueFar.val());
+				setFar($valueFar.val());
+			});
+		});
+	</script>
 </body>
 
 </html>

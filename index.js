@@ -10,6 +10,23 @@ var CylinderGeometry = new THREE.CylinderGeometry(20, 20, 40, 30, 5);
 var TorusGeometry = new THREE.TorusGeometry(20, 5, 20, 100);
 var TeapotGeometry = new THREE.TeapotBufferGeometry(20, 8);
 
+var setFOV = function(value)
+{
+	camera.fov = Number(value);
+	camera.updateProjectionMatrix();
+}
+var setFar = function(value)
+{
+	camera.far = Number(value);
+	camera.updateProjectionMatrix();
+}
+
+var setNear = function(value)
+{
+	camera.near = Number(value);
+	camera.updateProjectionMatrix();
+}
+
 var init = function ()
 {
     // Scene
