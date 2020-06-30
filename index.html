@@ -77,7 +77,7 @@
 			<div class="mt-5">
 				<div class="ml-auto w-25">
 					<div class="col-1 ">
-						<button type="button" class="btn btn-light shadow movebutton">
+						<button type="button" class="btn btn-light shadow movebutton" onclick="Translate()">
 							<svg class="bi bi-arrows-move" width="1em" height="1em" viewBox="0 0 16 16"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
@@ -92,7 +92,7 @@
 									d="M5.646 3.854a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8 2.207 6.354 3.854a.5.5 0 0 1-.708 0z" />
 							</svg>
 						</button>
-						<button type="button" class="btn btn-light shadow repeatbutton">
+						<button type="button" class="btn btn-light shadow repeatbutton" onclick="Rotate()">
 							<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
@@ -101,7 +101,7 @@
 									d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z" />
 							</svg>
 						</button>
-						<button type="button" class="btn btn-light shadow">
+						<button type="button" class="btn btn-light shadow" onclick="Scale()">
 							<svg class="bi bi-arrows-fullscreen" width="1em" height="1em" viewBox="0 0 16 16"
 								fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd"
@@ -153,12 +153,7 @@
 	<script src="js/popper.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/main.js"></script>
-
-	<script src="js/three.js"></script>
-	<script src="js/OrbitControls.js"></script>
-	<script src="js/TeapotBufferGeometry.js"></script>
-	<script src="js/geometry.js"></script>
-	<script src="./index.js"></script>
+	<script type="module" src="./index.js"></script>
 
 	<script>
 		$(document).ready(function () {

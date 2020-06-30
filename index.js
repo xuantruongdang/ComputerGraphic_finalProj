@@ -1,4 +1,8 @@
-var camera, scene, renderer, material, d_id;
+import * as THREE from './js/three.module.js';
+import { OrbitControls } from './js/OrbitControls.js';
+import {TransformControls} from './js/TransformControls.js';
+import {TeapotBufferGeometry} from './js/TeapotBufferGeometry.js';
+var camera, scene, renderer, material, d_id, control, orbit, geo;
 var type_material = 3;
 var geometry = new THREE.Mesh();
 
@@ -8,26 +12,12 @@ var SphereGeometry = new THREE.SphereGeometry(20, 20, 20);
 var ConeGeometry = new THREE.ConeGeometry(18, 30, 32, 20);
 var CylinderGeometry = new THREE.CylinderGeometry(20, 20, 40, 30, 5);
 var TorusGeometry = new THREE.TorusGeometry(20, 5, 20, 100);
-var TeapotGeometry = new THREE.TeapotBufferGeometry(20, 8);
+var TeapotGeometry = new TeapotBufferGeometry(20, 8);
 
-var setFOV = function(value)
-{
-	camera.fov = Number(value);
-	camera.updateProjectionMatrix();
-}
-var setFar = function(value)
-{
-	camera.far = Number(value);
-	camera.updateProjectionMatrix();
-}
+init();
+render();
 
-var setNear = function(value)
-{
-	camera.near = Number(value);
-	camera.updateProjectionMatrix();
-}
-
-var init = function ()
+function init()
 {
     // Scene
     scene = new THREE.Scene();
@@ -62,12 +52,25 @@ var init = function ()
         renderer.setSize( width, height )
         camera.aspect = width / height
         camera.updateProjectionMatrix()
+        render()
     })
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
-    Graphics_3Dmodel();
+    orbit = new OrbitControls(camera, renderer.domElement);
+    orbit.update();
+    orbit.addEventListener('change', render);
+    control = new TransformControls(camera, renderer.domElement);
+    console.log(control)
+    control.addEventListener('change', render);
+	control.addEventListener('dragging-changed', function (event) {
+		orbit.enabled = !event.value;
+	} );
 }
 
-var SetMaterial = function (mat)
+function render(){
+	renderer.render(scene, camera);
+}
+
+// 1. Basic 3D model with points, line and solid
+function SetMaterial(mat)
 {
     type_material = mat;
     switch (type_material)
@@ -78,9 +81,9 @@ var SetMaterial = function (mat)
     }
     RenderGeo(d_id);
 }
+window.SetMaterial = SetMaterial
 
-var RenderGeo = function (id) {
-    controls.update();
+function RenderGeo(id){
     if (id > 0 && id < 7) {
         d_id = id;
         scene.remove(geometry);
@@ -154,16 +157,71 @@ var RenderGeo = function (id) {
             break;
     }
     var box = new THREE.Box3().setFromObject(geometry);
-	geometry.position.y-=box.min['y'];
     scene.add(geometry);
-    renderer.render(scene, camera);
-    requestAnimationFrame(RenderGeo);
+    control_transform(geometry);
+    render();
 }
+window.RenderGeo = RenderGeo;
 
-var Graphics_3Dmodel = function () {
-	controls.update();
-	renderer.render(scene, camera);
-	requestAnimationFrame(Graphics_3Dmodel);
-};
+// 2. near, far
+function setFOV(value)
+{
+	camera.fov = Number(value);
+    camera.updateProjectionMatrix();
+    render();
+}
+window.setFOV = setFOV;
 
-init();
+function setFar(value)
+{
+	camera.far = Number(value);
+    camera.updateProjectionMatrix();
+    render();
+}
+window.setFar = setFar;
+
+function setNear(value)
+{
+	camera.near = Number(value);
+    camera.updateProjectionMatrix();
+    render();
+}
+window.setNear = setNear;
+
+// 3. Affine
+function Translate()
+{
+    control.setMode( "translate" );
+}
+window.Translate = Translate;
+
+function Rotate()
+{
+    control.setMode( "rotate" );
+}
+window.Rotate = Rotate;
+
+function Scale()
+{
+    control.setMode( "scale" );
+}
+window.Scale = Scale;
+
+function control_transform(geometry) {
+	control.attach(geometry);
+	scene.add(control);
+	console.log(control);
+	// window.addEventListener('keydown', function (event) {
+	// 	switch (event.keyCode) {
+	// 		case 87: // W
+	// 			EventTranslate();
+	// 			break;
+	// 		case 69: // E
+	// 			EventRotate();
+	// 			break;
+	// 		case 82: // R
+	// 			EventScale();
+	// 			break;
+	// 	}
+	// });
+}
