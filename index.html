@@ -26,9 +26,9 @@
 				<h1><a href="index.html" class="logo">TEAM A</a></h1>
 				<ul class="list-unstyled components mb-5">
 					<li>
-						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+						<a href="#renderSubmenu" data-toggle="collapse" aria-expanded="false"
 							class="dropdown-toggle">Geometry</a>
-						<ul class="collapse list-unstyled" id="homeSubmenu">
+						<ul class="collapse list-unstyled" id="renderSubmenu">
 							<li>
 								<a href="#" onclick="RenderGeo(1);">Cube</a>
 							</li>
@@ -50,9 +50,9 @@
 						</ul>
 					</li>
 					<li>
-						<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+						<a href="#surfaceSubmenu" data-toggle="collapse" aria-expanded="false"
 							class="dropdown-toggle">Surface</a>
-						<ul class="collapse list-unstyled" id="pageSubmenu">
+						<ul class="collapse list-unstyled" id="surfaceSubmenu">
 							<li>
 								<a href="#" onclick="SetMaterial(1);">Point</a>
 							</li>
@@ -66,6 +66,18 @@
 								<input type="file" accept="image/*" id="texture" style="display: none;"
 								onchange="SetTexture(window.URL.createObjectURL(this.files[0]))" />
 								<a href="#" name="button" onclick="Uploadimage();">Texture</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#lightSubmenu" data-toggle="collapse" aria-expanded="false"
+							class="dropdown-toggle">Light</a>
+						<ul class="collapse list-unstyled" id="lightSubmenu">
+							<li>
+								<a href="#" onclick="SetPointLight();">Light</a>
+							</li>
+							<li>
+								<a href="#" onclick="RemoveLight();">RemoveLight</a>
 							</li>
 						</ul>
 					</li>
