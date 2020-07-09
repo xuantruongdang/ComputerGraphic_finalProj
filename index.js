@@ -5,7 +5,7 @@ import {TeapotBufferGeometry} from './js/TeapotBufferGeometry.js';
 
 var camera, scene, renderer, control, orbit;
 var mesh, texture;
-var raycaster, light, PointLightHelper;
+var raycaster, light, PointLightHelper, meshplan;
 var type_material = 3;
 var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 material.needsUpdate = true;
@@ -142,7 +142,11 @@ function RenderGeo(id){
 			mesh = new THREE.Mesh(TeapotGeometry, material);
 			break;
 	}
-	mesh.name = "mesh1";
+    mesh.name = "mesh1";
+    var box = new THREE.Box3().setFromObject(mesh);
+    mesh.position.y-=box.min['y'];
+    mesh.castShadow = true;
+	mesh.receiveShadow = true;
 	scene.add(mesh);
 	control_transform(mesh);
 	render();
@@ -224,6 +228,25 @@ function SetPointLight() {
 	light = scene.getObjectByName("pl1");
 
 	if (!light) {
+        {
+            const planeSize = 400;
+            const loader = new THREE.TextureLoader();
+            const checker = loader.load('./checker.jpg');
+            checker.wrapS = THREE.RepeatWrapping;
+            checker.wrapT = THREE.RepeatWrapping;
+            checker.magFilter = THREE.NearestFilter;
+            const repeats = 40;
+            checker.repeat.set(repeats, repeats);
+            const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
+            const planeMat = new THREE.MeshPhongMaterial({
+              map: checker,
+              side: THREE.DoubleSide,
+            });
+            meshplan = new THREE.Mesh(planeGeo, planeMat);
+            meshplan.receiveShadow = true;
+            meshplan.rotation.x = Math.PI * -.5;
+            scene.add(meshplan);
+        }
 		const color = '#FFFFFF';
 		const intensity = 2;
 		light = new THREE.PointLight(color, intensity);
@@ -245,7 +268,8 @@ window.SetPointLight = SetPointLight;
 function RemoveLight() {
 	
 	scene.remove(light);
-	scene.remove(PointLightHelper);
+    scene.remove(PointLightHelper);
+    scene.remove(meshplan);
 	if (type_material == 3 || type_material == 4) {
 		SetMaterial(type_material);
 	}
