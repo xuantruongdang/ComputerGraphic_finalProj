@@ -1,7 +1,7 @@
 import * as THREE from './js/three.module.js';
 import { OrbitControls } from './js/OrbitControls.js';
-import {TransformControls} from './js/TransformControls.js';
-import {TeapotBufferGeometry} from './js/TeapotBufferGeometry.js';
+import { TransformControls } from './js/TransformControls.js';
+import { TeapotBufferGeometry } from './js/TeapotBufferGeometry.js';
 
 var camera, scene, renderer, control, orbit;
 var mesh, texture;
@@ -22,48 +22,47 @@ var TeapotGeometry = new TeapotBufferGeometry(20, 8);
 init();
 render();
 
-function init()
-{
-    // Scene
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x343a40);
+function init() {
+	// Scene
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color(0x343a40);
 
-    // Camera
-    var camera_x = 1;
-    var camera_y = 50;
-    var camera_z = 100;
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+	// Camera
+	var camera_x = 1;
+	var camera_y = 50;
+	var camera_z = 100;
+	camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 	camera.position.set(camera_x, camera_y, camera_z);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-    // Renderer
-    raycaster = new THREE.Raycaster();
-    renderer = new THREE.WebGLRenderer({ antialias: true})
-    renderer.setSize( window.innerWidth, window.innerHeight )
-    renderer.shadowMap.enabled = true;
+	// Renderer
+	raycaster = new THREE.Raycaster();
+	renderer = new THREE.WebGLRenderer({ antialias: true })
+	renderer.setSize(window.innerWidth, window.innerHeight)
+	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    document.getElementById("rendering").addEventListener('mousedown', onMouseDown, false);
-    document.getElementById("rendering").appendChild(renderer.domElement);
-    window.addEventListener( 'resize', () => {
-        var width = window.innerWidth
-        var height = window.innerHeight
-        renderer.setSize( width, height )
-        camera.aspect = width / height
-        camera.updateProjectionMatrix()
-        render()
-    })
-    orbit = new OrbitControls(camera, renderer.domElement);
-    orbit.update();
-    orbit.addEventListener('change', render);
-    control = new TransformControls(camera, renderer.domElement);
-    console.log(control)
-    control.addEventListener('change', render);
+	document.getElementById("rendering").addEventListener('mousedown', onMouseDown, false);
+	document.getElementById("rendering").appendChild(renderer.domElement);
+	window.addEventListener('resize', () => {
+		var width = window.innerWidth
+		var height = window.innerHeight
+		renderer.setSize(width, height)
+		camera.aspect = width / height
+		camera.updateProjectionMatrix()
+		render()
+	})
+	orbit = new OrbitControls(camera, renderer.domElement);
+	orbit.update();
+	orbit.addEventListener('change', render);
+	control = new TransformControls(camera, renderer.domElement);
+	console.log(control)
+	control.addEventListener('change', render);
 	control.addEventListener('dragging-changed', function (event) {
 		orbit.enabled = !event.value;
-	} );
+	});
 }
 
-function render(){
+function render() {
 	renderer.render(scene, camera);
 }
 
@@ -76,12 +75,11 @@ function CloneMesh(dummy_mesh) {
 	scene.add(mesh);
 	control_transform(mesh);
 }
-function SetMaterial(mat)
-{
-    mesh = scene.getObjectByName("mesh1");
+function SetMaterial(mat) {
+	mesh = scene.getObjectByName("mesh1");
 	light = scene.getObjectByName("pl1");
-    type_material = mat;
-    if (mesh) {
+	type_material = mat;
+	if (mesh) {
 		const dummy_mesh = mesh.clone();
 		scene.remove(mesh);
 
@@ -92,23 +90,23 @@ function SetMaterial(mat)
 				CloneMesh(dummy_mesh);
 				break;
 			case 2:
-				material = new THREE.MeshBasicMaterial({color: 0xffffff,wireframe: true});
+				material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
 				mesh = new THREE.Mesh(dummy_mesh.geometry, material);
 				CloneMesh(dummy_mesh);
 				break;
 			case 3:
 				if (!light)
-					material = new THREE.MeshBasicMaterial({color: 0xffffff});
+					material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 				else
-					material = new THREE.MeshPhongMaterial({color: 0xffffff});
+					material = new THREE.MeshPhongMaterial({ color: 0xffffff });
 				mesh = new THREE.Mesh(dummy_mesh.geometry, material);
 				CloneMesh(dummy_mesh);
 				break;
 			case 4:
 				if (!light)
-					material = new THREE.MeshBasicMaterial({map: texture,transparent: true});
+					material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
 				else
-					material = new THREE.MeshLambertMaterial({map: texture,transparent: true});
+					material = new THREE.MeshLambertMaterial({ map: texture, transparent: true });
 				mesh = new THREE.Mesh(dummy_mesh.geometry, material);
 				CloneMesh(dummy_mesh);
 				break;
@@ -118,8 +116,8 @@ function SetMaterial(mat)
 }
 window.SetMaterial = SetMaterial
 
-function RenderGeo(id){
-    mesh = scene.getObjectByName("mesh1");
+function RenderGeo(id) {
+	mesh = scene.getObjectByName("mesh1");
 	scene.remove(mesh);
 
 	switch (id) {
@@ -142,10 +140,10 @@ function RenderGeo(id){
 			mesh = new THREE.Mesh(TeapotGeometry, material);
 			break;
 	}
-    mesh.name = "mesh1";
-    var box = new THREE.Box3().setFromObject(mesh);
-    mesh.position.y-=box.min['y'];
-    mesh.castShadow = true;
+	mesh.name = "mesh1";
+	var box = new THREE.Box3().setFromObject(mesh);
+	mesh.position.y -= box.min['y'];
+	mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	scene.add(mesh);
 	control_transform(mesh);
@@ -154,46 +152,40 @@ function RenderGeo(id){
 window.RenderGeo = RenderGeo;
 
 // 2. near, far
-function setFOV(value)
-{
+function setFOV(value) {
 	camera.fov = Number(value);
-    camera.updateProjectionMatrix();
-    render();
+	camera.updateProjectionMatrix();
+	render();
 }
 window.setFOV = setFOV;
 
-function setFar(value)
-{
+function setFar(value) {
 	camera.far = Number(value);
-    camera.updateProjectionMatrix();
-    render();
+	camera.updateProjectionMatrix();
+	render();
 }
 window.setFar = setFar;
 
-function setNear(value)
-{
+function setNear(value) {
 	camera.near = Number(value);
-    camera.updateProjectionMatrix();
-    render();
+	camera.updateProjectionMatrix();
+	render();
 }
 window.setNear = setNear;
 
 // 3. Affine
-function Translate()
-{
-    control.setMode( "translate" );
+function Translate() {
+	control.setMode("translate");
 }
 window.Translate = Translate;
 
-function Rotate()
-{
-    control.setMode( "rotate" );
+function Rotate() {
+	control.setMode("rotate");
 }
 window.Rotate = Rotate;
 
-function Scale()
-{
-    control.setMode( "scale" );
+function Scale() {
+	control.setMode("scale");
 }
 window.Scale = Scale;
 
@@ -203,22 +195,22 @@ function control_transform(mesh) {
 	console.log(control);
 	window.addEventListener('keydown', function (event) {
 		switch (event.keyCode) {
-            case 84: // T
-				Translate();break;
+			case 84: // T
+				Translate(); break;
 			case 82: // R
-				Rotate();break;
+				Rotate(); break;
 			case 83: // S
-				Scale();break;
+				Scale(); break;
 			case 88: // X
-				control.showX = ! control.showX;break;
+				control.showX = !control.showX; break;
 			case 89: // Y
-				control.showY = ! control.showY;break;
+				control.showY = !control.showY; break;
 			case 90: // Z
-				control.showZ = ! control.showZ;break;
+				control.showZ = !control.showZ; break;
 			case 76: // L
-				SetPointLight();break;
+				SetPointLight(); break;
 			case 32: // spacebar
-				RemoveLight();break;
+				RemoveLight(); break;
 		}
 	});
 }
@@ -228,25 +220,25 @@ function SetPointLight() {
 	light = scene.getObjectByName("pl1");
 
 	if (!light) {
-        {
-            const planeSize = 400;
-            const loader = new THREE.TextureLoader();
-            const checker = loader.load('./checker.jpg');
-            checker.wrapS = THREE.RepeatWrapping;
-            checker.wrapT = THREE.RepeatWrapping;
-            checker.magFilter = THREE.NearestFilter;
-            const repeats = 40;
-            checker.repeat.set(repeats, repeats);
-            const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
-            const planeMat = new THREE.MeshPhongMaterial({
-              map: checker,
-              side: THREE.DoubleSide,
-            });
-            meshplan = new THREE.Mesh(planeGeo, planeMat);
-            meshplan.receiveShadow = true;
-            meshplan.rotation.x = Math.PI * -.5;
-            scene.add(meshplan);
-        }
+		{
+			const planeSize = 400;
+			const loader = new THREE.TextureLoader();
+			const checker = loader.load('./checker.jpg');
+			checker.wrapS = THREE.RepeatWrapping;
+			checker.wrapT = THREE.RepeatWrapping;
+			checker.magFilter = THREE.NearestFilter;
+			const repeats = 40;
+			checker.repeat.set(repeats, repeats);
+			const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
+			const planeMat = new THREE.MeshPhongMaterial({
+				map: checker,
+				side: THREE.DoubleSide,
+			});
+			meshplan = new THREE.Mesh(planeGeo, planeMat);
+			meshplan.receiveShadow = true;
+			meshplan.rotation.x = Math.PI * -.5;
+			scene.add(meshplan);
+		}
 		const color = '#FFFFFF';
 		const intensity = 2;
 		light = new THREE.PointLight(color, intensity);
@@ -266,10 +258,10 @@ function SetPointLight() {
 window.SetPointLight = SetPointLight;
 
 function RemoveLight() {
-	
+
 	scene.remove(light);
-    scene.remove(PointLightHelper);
-    scene.remove(meshplan);
+	scene.remove(PointLightHelper);
+	scene.remove(meshplan);
 	if (type_material == 3 || type_material == 4) {
 		SetMaterial(type_material);
 	}
@@ -313,3 +305,34 @@ function SetTexture(url) {
 	}
 }
 window.SetTexture = SetTexture;
+
+
+// 6. Animation
+var mesh = new THREE.Mesh();
+var point = new THREE.Points();
+var id_animation1, id_animation2;
+
+function animation1() {
+	mesh.rotation.x += 0.01;
+	point.rotation.x += 0.01;
+	render();
+	id_animation1 = requestAnimationFrame(animation1);
+}
+window.animation1 = animation1;
+
+function animation2() {
+	mesh.rotation.y += 0.01;
+	point.rotation.y += 0.01;
+	render();
+	id_animation2 = requestAnimationFrame(animation2);
+}
+window.animation2 = animation2;
+
+function removeanimation() {
+	cancelAnimationFrame(id_animation1);
+	cancelAnimationFrame(id_animation2);
+	// mesh.rotation.set(0, 0, 0);
+	// point.rotation.set(0, 0, 0);
+	render();
+}
+window.removeanimation = removeanimation;
