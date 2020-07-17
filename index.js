@@ -35,11 +35,17 @@ function init() {
 	camera.position.set(camera_x, camera_y, camera_z);
 	camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-	// Renderer
-	raycaster = new THREE.Raycaster();
-	renderer = new THREE.WebGLRenderer({ antialias: true })
-	renderer.setSize(window.innerWidth, window.innerHeight)
-	renderer.shadowMap.enabled = true;
+	// Grid
+    var size = 300;
+    var divisions = 50;
+    var gridHelper = new THREE.GridHelper(size, divisions, 0x888888);
+	scene.add(gridHelper);
+	
+    // Renderer
+    raycaster = new THREE.Raycaster();
+    renderer = new THREE.WebGLRenderer({antialias: true})
+    renderer.setSize( window.innerWidth, window.innerHeight )
+    renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	document.getElementById("rendering").addEventListener('mousedown', onMouseDown, false);
 	document.getElementById("rendering").appendChild(renderer.domElement);
@@ -72,6 +78,8 @@ function CloneMesh(dummy_mesh) {
 	mesh.position.set(dummy_mesh.position.x, dummy_mesh.position.y, dummy_mesh.position.z);
 	mesh.rotation.set(dummy_mesh.rotation._x, dummy_mesh.rotation._y, dummy_mesh.rotation._z);
 	mesh.scale.set(dummy_mesh.scale.x, dummy_mesh.scale.y, dummy_mesh.scale.z);
+	mesh.castShadow = true;
+	mesh.receiveShadow = true;
 	scene.add(mesh);
 	control_transform(mesh);
 }
@@ -140,10 +148,8 @@ function RenderGeo(id) {
 			mesh = new THREE.Mesh(TeapotGeometry, material);
 			break;
 	}
-	mesh.name = "mesh1";
-	var box = new THREE.Box3().setFromObject(mesh);
-	mesh.position.y -= box.min['y'];
-	mesh.castShadow = true;
+    mesh.name = "mesh1";
+    mesh.castShadow = true;
 	mesh.receiveShadow = true;
 	scene.add(mesh);
 	control_transform(mesh);
@@ -220,28 +226,21 @@ function SetPointLight() {
 	light = scene.getObjectByName("pl1");
 
 	if (!light) {
-		{
-			const planeSize = 400;
+        {
+            const planeSize = 400;
 			const loader = new THREE.TextureLoader();
-			const checker = loader.load('./checker.jpg');
-			checker.wrapS = THREE.RepeatWrapping;
-			checker.wrapT = THREE.RepeatWrapping;
-			checker.magFilter = THREE.NearestFilter;
-			const repeats = 40;
-			checker.repeat.set(repeats, repeats);
 			const planeGeo = new THREE.PlaneBufferGeometry(planeSize, planeSize);
-			const planeMat = new THREE.MeshPhongMaterial({
-				map: checker,
-				side: THREE.DoubleSide,
-			});
+			const planeMat = new THREE.MeshPhongMaterial({side: THREE.DoubleSide,});
 			meshplan = new THREE.Mesh(planeGeo, planeMat);
 			meshplan.receiveShadow = true;
 			meshplan.rotation.x = Math.PI * -.5;
-			scene.add(meshplan);
-		}
+			meshplan.position.y += 0.5;
+            scene.add(meshplan);
+        }
 		const color = '#FFFFFF';
 		const intensity = 2;
 		light = new THREE.PointLight(color, intensity);
+		light.castShadow = true;
 		light.position.set(0, 70, 0);
 		light.name = "pl1";
 		scene.add(light);
