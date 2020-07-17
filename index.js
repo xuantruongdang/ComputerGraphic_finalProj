@@ -349,6 +349,7 @@ const position_x = mesh.position.x;
 const position_y = mesh.position.y;
 var kt = 0;
 function Animation3() {
+	cancelAnimationFrame(id_animation4);
 	cancelAnimationFrame(id_animation3);
 	var positionx = mesh.position.x;
 	var positiony = mesh.position.y;
@@ -379,6 +380,7 @@ window.Animation3 = Animation3;
 
 var kt2 = 0;
 function Animation4() {
+	cancelAnimationFrame(id_animation3);
 	cancelAnimationFrame(id_animation4);
 	var positiony = mesh.position.y;
 	if (positiony < position_y + 30 && kt2 == 0) 
@@ -386,7 +388,6 @@ function Animation4() {
 		mesh.position.y += 0.3;
 		mesh.scale.y += 0.003;
 		mesh.rotation.y += 0.05;
-		console.log (mesh.scale.y);
 	}
 	if (positiony > position_y + 30) kt2 += 1;
 	if (kt2 > 1 && positiony > position_y) 
@@ -394,7 +395,6 @@ function Animation4() {
 		mesh.position.y -= 0.3;
 		mesh.scale.y -= 0.003;
 		mesh.rotation.y += 0.05;
-		console.log ('1',mesh.scale.y);
 	}
 	if (positiony < position_y) kt2 = 0;
 	render();
