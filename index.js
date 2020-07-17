@@ -80,7 +80,7 @@ function render() {
 function CloneMesh(dummy_mesh) {
 	mesh.name = dummy_mesh.name;
 	mesh.position.set(dummy_mesh.position.x, dummy_mesh.position.y, dummy_mesh.position.z);
-	mesh.rotation.set(dummy_mesh.rotation._x, dummy_mesh.rotation._y, dummy_mesh.rotation._z);
+	mesh.rotation.set(dummy_mesh.rotation.x, dummy_mesh.rotation.y, dummy_mesh.rotation.z);
 	mesh.scale.set(dummy_mesh.scale.x, dummy_mesh.scale.y, dummy_mesh.scale.z);
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
@@ -325,7 +325,7 @@ window.SetTexture = SetTexture;
 // 6. Animation
 var mesh = new THREE.Mesh();
 var point = new THREE.Points();
-var id_animation1, id_animation2;
+var id_animation1, id_animation2, id_animation3;
 
 function Animation1() {
 	cancelAnimationFrame(id_animation1);
@@ -345,6 +345,38 @@ function Animation2() {
 }
 window.Animation2 = Animation2;
 
+const position_x = mesh.position.x;
+const position_y = mesh.position.y;
+var kt = 0;
+function Animation3() {
+	cancelAnimationFrame(id_animation3);
+	var positionx = mesh.position.x;
+	var positiony = mesh.position.y;
+	if (positiony < position_y + 30 && kt == 0)
+	{
+		mesh.position.y += 0.3;
+	}
+	if (positiony > position_y + 30 && positionx < position_x + 30) 
+	{
+		mesh.position.x += 0.3;
+	}
+	if (positiony > position_y + 30 && positionx > position_x + 30) kt += 1;
+	if (kt > 1 && positiony > position_y)
+	{
+		mesh.position.y -= 0.3;
+	}
+	if (kt > 1 && positiony < position_y && positionx > position_x)
+	{
+		mesh.position.x -= 0.3;
+	}
+	if (positiony < position_y && positionx < position_x) kt = 0;
+	mesh.rotation.y += 0.01;
+	point.rotation.y += 0.01;
+	render();
+	id_animation3 = requestAnimationFrame(Animation3);
+}
+window.Animation3 = Animation3;
+
 function RemoveAnimation1() {
 	cancelAnimationFrame(id_animation1);
 }
@@ -358,6 +390,7 @@ window.RemoveAnimation2 = RemoveAnimation2;
 function RemoveAllAnimation() {
 	cancelAnimationFrame(id_animation1);
 	cancelAnimationFrame(id_animation2);
+	cancelAnimationFrame(id_animation3);
 	mesh.rotation.set(0, 0, 0);
 	point.rotation.set(0, 0, 0);
 	render();
