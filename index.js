@@ -18,6 +18,10 @@ var ConeGeometry = new THREE.ConeGeometry(18, 30, 32, 20);
 var CylinderGeometry = new THREE.CylinderGeometry(20, 20, 40, 30, 5);
 var TorusGeometry = new THREE.TorusGeometry(20, 5, 20, 100);
 var TeapotGeometry = new TeapotBufferGeometry(20, 8);
+var DodecahedronGeometry = new THREE.DodecahedronBufferGeometry(25);
+var IcosahedronGeometry = new THREE.IcosahedronBufferGeometry(25);
+var OctahedronGeometry =  new THREE.OctahedronBufferGeometry(25);
+var TetrahedronGeometry = new THREE.TetrahedronBufferGeometry(25);
 
 init();
 render();
@@ -146,6 +150,18 @@ function RenderGeo(id) {
 			break;
 		case 6:
 			mesh = new THREE.Mesh(TeapotGeometry, material);
+			break;
+		case 7:
+			mesh = new THREE.Mesh(IcosahedronGeometry, material);
+			break;
+		case 8:
+			mesh = new THREE.Mesh(DodecahedronGeometry, material);
+			break;
+		case 9:
+			mesh = new THREE.Mesh(OctahedronGeometry, material);
+			break;
+		case 10:
+			mesh = new THREE.Mesh(TetrahedronGeometry, material);
 			break;
 	}
     mesh.name = "mesh1";
