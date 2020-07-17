@@ -387,6 +387,11 @@ function RemoveAnimation2() {
 }
 window.RemoveAnimation2 = RemoveAnimation2;
 
+function RemoveAnimation3() {
+	cancelAnimationFrame(id_animation3);
+}
+window.RemoveAnimation3 = RemoveAnimation3;
+
 function RemoveAllAnimation() {
 	cancelAnimationFrame(id_animation1);
 	cancelAnimationFrame(id_animation2);

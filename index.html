@@ -106,8 +106,9 @@
 								<input type="checkbox" class="custom-control-input" id="animation2">
 								<label class="custom-control-label" for="animation2">#2</label>
 							</li>
-							<li>
-								<a href="#" onclick="Animation3()">Square Animation</a>
+							<li class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="animation3">
+								<label class="custom-control-label" for="animation3">#3</label>
 							</li>
 							<li>
 								<a href="#" onclick="ResetAnimation()">Reset</a>
@@ -221,9 +222,19 @@
 			}
 		});
 
+		$('#animation3').change(function () {
+			if ($(this).prop('checked')) {
+				Animation3();
+			}
+			else {
+				RemoveAnimation3();
+			}
+		});
+
 		function ResetAnimation() {
 			document.getElementById("animation1").checked = false;
 			document.getElementById("animation2").checked = false;
+			document.getElementById("animation3").checked = false;
 			RemoveAllAnimation();
   		};
 
