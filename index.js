@@ -324,13 +324,13 @@ window.SetTexture = SetTexture;
 
 // 6. Animation
 var mesh = new THREE.Mesh();
-var point = new THREE.Points();
-var id_animation1, id_animation2, id_animation3;
+// var point = new THREE.Points();
+var id_animation1, id_animation2, id_animation3, id_animation4;
 
 function Animation1() {
 	cancelAnimationFrame(id_animation1);
 	mesh.rotation.x += 0.01;
-	point.rotation.x += 0.01;
+	// point.rotation.x += 0.01;
 	render();
 	id_animation1 = requestAnimationFrame(Animation1);
 }
@@ -339,7 +339,7 @@ window.Animation1 = Animation1;
 function Animation2() {
 	cancelAnimationFrame(id_animation2);
 	mesh.rotation.y += 0.01;
-	point.rotation.y += 0.01;
+	// point.rotation.y += 0.01;
 	render();
 	id_animation2 = requestAnimationFrame(Animation2);
 }
@@ -371,11 +371,36 @@ function Animation3() {
 	}
 	if (positiony < position_y && positionx < position_x) kt = 0;
 	mesh.rotation.y += 0.01;
-	point.rotation.y += 0.01;
+	// point.rotation.y += 0.01;
 	render();
 	id_animation3 = requestAnimationFrame(Animation3);
 }
 window.Animation3 = Animation3;
+
+var kt2 = 0;
+function Animation4() {
+	cancelAnimationFrame(id_animation4);
+	var positiony = mesh.position.y;
+	if (positiony < position_y + 30 && kt2 == 0) 
+	{ 
+		mesh.position.y += 0.3;
+		mesh.scale.y += 0.003;
+		mesh.rotation.y += 0.05;
+		console.log (mesh.scale.y);
+	}
+	if (positiony > position_y + 30) kt2 += 1;
+	if (kt2 > 1 && positiony > position_y) 
+	{ 
+		mesh.position.y -= 0.3;
+		mesh.scale.y -= 0.003;
+		mesh.rotation.y += 0.05;
+		console.log ('1',mesh.scale.y);
+	}
+	if (positiony < position_y) kt2 = 0;
+	render();
+	id_animation4 = requestAnimationFrame(Animation4);
+}
+window.Animation4 = Animation4;
 
 function RemoveAnimation1() {
 	cancelAnimationFrame(id_animation1);
@@ -392,10 +417,16 @@ function RemoveAnimation3() {
 }
 window.RemoveAnimation3 = RemoveAnimation3;
 
+function RemoveAnimation4() {
+	cancelAnimationFrame(id_animation4);
+}
+window.RemoveAnimation4 = RemoveAnimation4;
+
 function RemoveAllAnimation() {
 	cancelAnimationFrame(id_animation1);
 	cancelAnimationFrame(id_animation2);
 	cancelAnimationFrame(id_animation3);
+	cancelAnimationFrame(id_animation4);
 	mesh.rotation.set(0, 0, 0);
 	point.rotation.set(0, 0, 0);
 	render();
