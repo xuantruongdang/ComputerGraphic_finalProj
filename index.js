@@ -311,29 +311,39 @@ var mesh = new THREE.Mesh();
 var point = new THREE.Points();
 var id_animation1, id_animation2;
 
-function animation1() {
+function Animation1() {
 	cancelAnimationFrame(id_animation1);
 	mesh.rotation.x += 0.01;
 	point.rotation.x += 0.01;
 	render();
-	id_animation1 = requestAnimationFrame(animation1);
+	id_animation1 = requestAnimationFrame(Animation1);
 }
-window.animation1 = animation1;
+window.Animation1 = Animation1;
 
-function animation2() {
+function Animation2() {
 	cancelAnimationFrame(id_animation2);
 	mesh.rotation.y += 0.01;
 	point.rotation.y += 0.01;
 	render();
-	id_animation2 = requestAnimationFrame(animation2);
+	id_animation2 = requestAnimationFrame(Animation2);
 }
-window.animation2 = animation2;
+window.Animation2 = Animation2;
 
-function removeanimation() {
+function RemoveAnimation1() {
+	cancelAnimationFrame(id_animation1);
+}
+window.RemoveAnimation1 = RemoveAnimation1;
+
+function RemoveAnimation2() {
+	cancelAnimationFrame(id_animation2);
+}
+window.RemoveAnimation2 = RemoveAnimation2;
+
+function RemoveAllAnimation() {
 	cancelAnimationFrame(id_animation1);
 	cancelAnimationFrame(id_animation2);
-	// mesh.rotation.set(0, 0, 0);
-	// point.rotation.set(0, 0, 0);
+	mesh.rotation.set(0, 0, 0);
+	point.rotation.set(0, 0, 0);
 	render();
 }
-window.removeanimation = removeanimation;
+window.RemoveAllAnimation = RemoveAllAnimation;
