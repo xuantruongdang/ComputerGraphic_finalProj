@@ -313,6 +313,7 @@ var point = new THREE.Points();
 var id_animation1, id_animation2;
 
 function animation1() {
+	cancelAnimationFrame(id_animation1);
 	mesh.rotation.x += 0.01;
 	point.rotation.x += 0.01;
 	render();
@@ -321,6 +322,7 @@ function animation1() {
 window.animation1 = animation1;
 
 function animation2() {
+	cancelAnimationFrame(id_animation2);
 	mesh.rotation.y += 0.01;
 	point.rotation.y += 0.01;
 	render();
