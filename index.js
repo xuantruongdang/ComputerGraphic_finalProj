@@ -386,14 +386,12 @@ function Animation4() {
 	if (positiony < position_y + 30 && kt2 == 0) 
 	{ 
 		mesh.position.y += 0.3;
-		mesh.scale.y += 0.003;
 		mesh.rotation.y += 0.05;
 	}
 	if (positiony > position_y + 30) kt2 += 1;
 	if (kt2 > 1 && positiony > position_y) 
 	{ 
 		mesh.position.y -= 0.3;
-		mesh.scale.y -= 0.003;
 		mesh.rotation.y += 0.05;
 	}
 	if (positiony < position_y) kt2 = 0;
