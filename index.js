@@ -392,6 +392,7 @@ function Animation4() {
 	if (kt2 > 1 && positiony > position_y) 
 	{ 
 		mesh.position.y -= 0.3;
+		mes
 		mesh.rotation.y += 0.05;
 	}
 	if (positiony < position_y) kt2 = 0;
