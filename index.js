@@ -324,13 +324,11 @@ window.SetTexture = SetTexture;
 
 // 6. Animation
 var mesh = new THREE.Mesh();
-// var point = new THREE.Points();
 var id_animation1, id_animation2, id_animation3, id_animation4;
 
 function Animation1() {
 	cancelAnimationFrame(id_animation1);
 	mesh.rotation.x += 0.01;
-	// point.rotation.x += 0.01;
 	render();
 	id_animation1 = requestAnimationFrame(Animation1);
 }
@@ -339,7 +337,6 @@ window.Animation1 = Animation1;
 function Animation2() {
 	cancelAnimationFrame(id_animation2);
 	mesh.rotation.y += 0.01;
-	// point.rotation.y += 0.01;
 	render();
 	id_animation2 = requestAnimationFrame(Animation2);
 }
@@ -372,7 +369,6 @@ function Animation3() {
 	}
 	if (positiony < position_y && positionx < position_x) kt = 0;
 	mesh.rotation.y += 0.01;
-	// point.rotation.y += 0.01;
 	render();
 	id_animation3 = requestAnimationFrame(Animation3);
 }
@@ -426,7 +422,6 @@ function RemoveAllAnimation() {
 	cancelAnimationFrame(id_animation3);
 	cancelAnimationFrame(id_animation4);
 	mesh.rotation.set(0, 0, 0);
-	point.rotation.set(0, 0, 0);
 	render();
 }
 window.RemoveAllAnimation = RemoveAllAnimation;
