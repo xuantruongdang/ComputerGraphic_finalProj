@@ -1,2 +1,2 @@
 # ComputerGraphic_finalProj
-Project 3D graphics for DHMT
+Install Live Server extension on VSCode then open file index.html and "Go live"
